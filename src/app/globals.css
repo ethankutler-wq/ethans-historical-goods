@@ -5,13 +5,6 @@
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -24,3 +17,41 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* --- EHG hover animations (rotate between these per-card) --- */
+@keyframes ehgTwirl {
+  0%   { transform: scale(1) rotate(0deg); }
+  60%  { transform: scale(1.03) rotate(2deg); }
+  100% { transform: scale(1.01) rotate(0deg); }
+}
+
+@keyframes ehgFadeUp {
+  0%   { opacity: 0.75; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ehgWobble {
+  0%   { transform: rotate(0deg) scale(1); }
+  20%  { transform: rotate(-1.5deg) scale(1.01); }
+  40%  { transform: rotate(1.5deg) scale(1.02); }
+  60%  { transform: rotate(-1deg) scale(1.02); }
+  80%  { transform: rotate(1deg) scale(1.01); }
+  100% { transform: rotate(0deg) scale(1.01); }
+}
+
+@keyframes ehgPop {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.05); }
+  100% { transform: scale(1.01); }
+}
+
+/* Apply animation to the card's "target" element */
+.ehg-anim-target {
+  will-change: transform, opacity;
+}
+
+/* Rotate animation choices per card by applying one of these classes to the card */
+.ehg-anim-twirl:hover .ehg-anim-target { animation: ehgTwirl 520ms ease-out both; }
+.ehg-anim-fade:hover  .ehg-anim-target { animation: ehgFadeUp 420ms ease-out both; }
+.ehg-anim-wobble:hover .ehg-anim-target { animation: ehgWobble 620ms ease-out both; }
+.ehg-anim-pop:hover   .ehg-anim-target { animation: ehgPop 420ms ease-out both; }

@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ethanshistoricalgoods
 
-## Getting Started
+Your biking data, visualized your way. A custom Strava-powered dashboard.
 
-First, run the development server:
+## Setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Clone and install**
+   ```bash
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Configure Strava API**
+   - Create an app at [Strava API Settings](https://www.strava.com/settings/api)
+   - Set **Authorization Callback Domain** to `localhost` for local dev
+   - See [STRAVA_SETUP.md](./STRAVA_SETUP.md) for the full walkthrough
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Environment variables**
+   ```bash
+   cp .env.example .env.local
+   ```
+   Edit `.env.local` with your Strava Client ID and Client Secret.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. **Database**
+   ```bash
+   echo 'DATABASE_URL="file:./dev.db"' >> .env.local
+   npx prisma migrate dev --name init
+   ```
 
-## Learn More
+5. **Run**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) and click "Connect with Strava".
 
-To learn more about Next.js, take a look at the following resources:
+## Domain
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Your domain stays the same. When deploying to production:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Set `NEXT_PUBLIC_APP_URL` to your production URL
+2. Update Strava's Authorization Callback Domain to your domain (no `https://`)
