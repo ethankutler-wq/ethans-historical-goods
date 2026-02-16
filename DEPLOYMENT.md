@@ -22,16 +22,9 @@ git push origin main
 
 ---
 
-## 3. Add SQLite volume
+## 3. Set environment variables
 
-1. In your project, click **+ New** → **Volume**
-2. Name it `data`
-3. Mount path: `/data`
-4. Attach it to your service
-
----
-
-## 4. Set environment variables
+**Important:** Add these in Railway before the first deploy (Variables → Add variable).
 
 In Railway → your service → **Variables**:
 
@@ -40,19 +33,22 @@ In Railway → your service → **Variables**:
 | `DATABASE_URL` | `file:/data/railway.db` |
 | `STRAVA_CLIENT_ID` | From [Strava API Settings](https://www.strava.com/settings/api) |
 | `STRAVA_CLIENT_SECRET` | From Strava API Settings |
-| `NEXT_PUBLIC_APP_URL` | `https://your-app.up.railway.app` (Railway will give you this) |
+| `NEXT_PUBLIC_APP_URL` | `https://your-app.up.railway.app` (use placeholder, update after first deploy) |
 
 ---
 
-## 5. Run migrations
+## 4. Add SQLite volume
 
-Add to your build command or run once:
+1. In your project, click **+ New** → **Volume**
+2. Name it `data`
+3. Mount path: `/data`
+4. Attach it to your service
 
-```bash
-npx prisma migrate deploy
-```
+---
 
-Or add to `package.json` build: `"build": "prisma generate && prisma migrate deploy && next build"`
+## 5. Migrations
+
+Migrations run automatically at **startup** (the `start` script runs `prisma migrate deploy` before starting the app). No extra setup needed.
 
 ---
 
