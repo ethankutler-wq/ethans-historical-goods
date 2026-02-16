@@ -3,7 +3,8 @@ const STRAVA_API = "https://www.strava.com/api/v3";
 
 export function getStravaAuthUrl(state?: string): string {
   const clientId = process.env.STRAVA_CLIENT_ID;
-  const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/strava/callback`;
+  const baseUrl = (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000").replace(/\/$/, "");
+  const redirectUri = `${baseUrl}/api/auth/strava/callback`;
 
   if (!clientId) {
     throw new Error("STRAVA_CLIENT_ID is not set");
@@ -24,7 +25,8 @@ export function getStravaAuthUrl(state?: string): string {
 export async function exchangeCodeForToken(code: string) {
   const clientId = process.env.STRAVA_CLIENT_ID;
   const clientSecret = process.env.STRAVA_CLIENT_SECRET;
-  const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/strava/callback`;
+  const baseUrl = (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000").replace(/\/$/, "");
+  const redirectUri = `${baseUrl}/api/auth/strava/callback`;
 
   if (!clientId || !clientSecret) {
     throw new Error("Strava credentials not configured");
