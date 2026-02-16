@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { AreWeThereYetClient } from "./AreWeThereYetClient";
 
+export const dynamic = "force-dynamic";
+
 export default async function AreWeThereYetPage() {
   const token = await prisma.stravaToken.findFirst();
   if (!token) {
